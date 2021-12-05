@@ -4,12 +4,12 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEditor;
 
-[CreateAssetMenu(fileName = "Effect", menuName = "ScriptableObjects/SpawnManagerCustomEffect", order = 1)]
+[CreateAssetMenu(fileName = "Effect", menuName = "ScriptableObjects/Effect", order = 1)]
 [Serializable]
 public class Effects : ScriptableObject
 {
     [Serializable]
-    public struct Calculation
+    public struct CalculationType
     {
         public string value;
     }
@@ -23,7 +23,7 @@ public class Effects : ScriptableObject
     [Serializable]
     public struct Calculations
     {
-        public Calculation calculationType;
+        public CalculationType calculationType;
         public PlayerPropertyType propertyType;
         public int Value;
     }
@@ -31,7 +31,7 @@ public class Effects : ScriptableObject
     public Calculations[] calculations;
 }
 
-[CustomPropertyDrawer(typeof(Effects.Calculation))]
+[CustomPropertyDrawer(typeof(Effects.CalculationType))]
 public class EffectsDrawerCalculations : PropertyDrawer
 {
     static readonly string[] comboItemDatabase = { "Multiply", "Add", "substract" };
