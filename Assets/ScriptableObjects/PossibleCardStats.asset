@@ -13,10 +13,19 @@ MonoBehaviour:
   m_Name: PossibleCardStats
   m_EditorClassIdentifier: Assembly-CSharp::MainCardContainer
   PossibleNames:
-  - a
+  - "Pizza bog\xF3w"
+  - "Pizza zwyci\u0119zc\xF3w"
+  - Pizza przegranych
   PossibleDescriptions:
-  - b
+  - "Wiele os\xF3b otrzymuje od niej si\u0142e, jednak\u017Ce niekt\xF3rych mo\u017Ce
+    niesamowicie zatr\xF3\u0107"
+  - "Osobi\u015Bcie nie jad\u0142bym jej, ale nie jestem od tego by decydowa\u0107
+    kto ma co je\u015B\u0107"
+  - "Z pewno\u015Bci\u0105 pizza ta powinna si\u0119 znale\u017A\u0107 na j\u0119zykach
+    wielu mi\u0142o\u015Bnik\xF3w tego oto dania"
   PossibleTextures:
-  - {fileID: 2800000, guid: 7d7ba927f7ef12b4d947794a08084a42, type: 3}
+  - {fileID: 21300000, guid: 665d79fcf7f8f7246bc9805eabcbf981, type: 3}
+  - {fileID: 21300000, guid: 7d7ba927f7ef12b4d947794a08084a42, type: 3}
+  - {fileID: 21300000, guid: f05133725bc0b3b48b66668f94049b1d, type: 3}
   PossibleEffects:
   - {fileID: 11400000, guid: 97c0027051f60ef47a073fdf9a011fe3, type: 2}

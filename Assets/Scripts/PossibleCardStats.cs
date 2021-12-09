@@ -9,7 +9,7 @@ public class PossibleCardStats : ScriptableObject
 {
     public List<string> PossibleNames;
     public List<string> PossibleDescriptions;
-    public List<Texture2D> PossibleTextures;
+    public List<Sprite> PossibleTextures;
     public List<Effects> PossibleEffects;
 }
 

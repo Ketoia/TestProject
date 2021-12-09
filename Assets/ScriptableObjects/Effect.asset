@@ -17,4 +17,14 @@ MonoBehaviour:
       value: substract
     propertyType:
       value: HP
-    Value: 55
+    Value: 15
+  - calculationType:
+      value: Add
+    propertyType:
+      value: Mana
+    Value: 15
+  - calculationType:
+      value: Multiply
+    propertyType:
+      value: Speed
+    Value: 2

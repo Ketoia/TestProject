@@ -9,6 +9,9 @@ public class MainManager : MonoBehaviour
     private static Dictionary<string, UnityEvent> eventDictionary = new Dictionary<string, UnityEvent>();
 
     public PossibleCardStats possibleCardStats;
+    public Card card;
+
+    Player player;
     #endregion
 
     #region Main Unity Functions
@@ -18,6 +21,8 @@ public class MainManager : MonoBehaviour
         StartListining("Generate", Generate);
         StartListining("Save", Save);
         StartListining("Execute", Execute);
+
+        player = FindObjectOfType(typeof(Player)) as Player;
     }
 
     #endregion
@@ -61,7 +66,10 @@ public class MainManager : MonoBehaviour
 
     private void Generate()
     {
-        Debug.Log("Generate");
+        card.Name = possibleCardStats.PossibleNames[Random.Range(0, possibleCardStats.PossibleNames.Count)];
+        card.Description = possibleCardStats.PossibleDescriptions[Random.Range(0, possibleCardStats.PossibleDescriptions.Count)];
+        card.sprite = possibleCardStats.PossibleTextures[Random.Range(0, possibleCardStats.PossibleTextures.Count)];
+        card.Effect = possibleCardStats.PossibleEffects[Random.Range(0, possibleCardStats.PossibleEffects.Count)];
     }
 
     public void Save()
@@ -71,7 +79,56 @@ public class MainManager : MonoBehaviour
 
     public void Execute()
     {
-        Debug.Log("Execute");
+        foreach(Effects.Calculations effect in card.Effect.calculations)
+        {
+            string type = effect.calculationType.value;
+            if(type == "Multiply")
+            {
+                if(effect.propertyType.value == "HP")
+                {
+                    player.Hp *= effect.Value;
+                }
+                else if (effect.propertyType.value == "Mana")
+                {
+                    player.Mana *= effect.Value;
+                }
+                else if (effect.propertyType.value == "Speed")
+                {
+                    player.Speed *= effect.Value;
+                }
+            }
+            else if(type == "Add")
+            {
+                if (effect.propertyType.value == "HP")
+                {
+                    player.Hp += effect.Value;
+                }
+                else if (effect.propertyType.value == "Mana")
+                {
+                    player.Mana += effect.Value;
+                }
+                else if (effect.propertyType.value == "Speed")
+                {
+                    player.Speed += effect.Value;
+                }
+            }
+            else if(type == "substract")
+            {
+                if (effect.propertyType.value == "HP")
+                {
+                    player.Hp -= effect.Value;
+                }
+                else if (effect.propertyType.value == "Mana")
+                {
+                    player.Mana -= effect.Value;
+                }
+                else if (effect.propertyType.value == "Speed")
+                {
+                    player.Speed -= effect.Value;
+                }
+            }
+        }
+        
     }
     #endregion
 
@@ -84,7 +141,5 @@ public class MainManager : MonoBehaviour
         if (GUILayout.Button("Wykonaj")) TriggerEvent("Execute");
 
     }
-
-
     #endregion
 }
