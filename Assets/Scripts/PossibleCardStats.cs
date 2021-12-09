@@ -39,6 +39,8 @@ public class LookAtPointEditor : Editor
         EditorGUILayout.PropertyField(PossibleTextures);
         EditorGUILayout.PropertyField(PossibleEffects);
 
-        if (PossibleEffects.arraySize < 6) serializedObject.ApplyModifiedProperties();
+        if (PossibleEffects.arraySize > 5) PossibleEffects.arraySize = 5;
+
+        serializedObject.ApplyModifiedProperties();
     }
 }

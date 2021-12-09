@@ -12,12 +12,11 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 96be2d35902b84049a8d8eec2249bb3d, type: 3}
   m_Name: PossibleCardStats
   m_EditorClassIdentifier: Assembly-CSharp::MainCardContainer
-  PossibleNames: []
-  PossibleDescriptions: []
-  PossibleTextures: []
+  PossibleNames:
+  - a
+  PossibleDescriptions:
+  - b
+  PossibleTextures:
+  - {fileID: 2800000, guid: 7d7ba927f7ef12b4d947794a08084a42, type: 3}
   PossibleEffects:
-  - {fileID: 0}
-  - {fileID: 0}
-  - {fileID: 0}
-  - {fileID: 0}
-  - {fileID: 0}
+  - {fileID: 11400000, guid: 97c0027051f60ef47a073fdf9a011fe3, type: 2}

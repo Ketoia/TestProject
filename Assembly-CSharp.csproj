@@ -55,6 +55,7 @@
   <ItemGroup>
     <Compile Include="Assets\Scripts\MainManager.cs" />
     <Compile Include="Assets\Scripts\Effects.cs" />
+    <Compile Include="Assets\Scripts\Card.cs" />
     <Compile Include="Assets\Scripts\PossibleCardStats.cs" />
   </ItemGroup>
   <ItemGroup>
