@@ -131,6 +131,8 @@ public class MainManager : MonoBehaviour
             }
         }
         Debug.Log("Executed effect on player");
+
+        TriggerEvent("Generate");
     }
 
     private void Save()
