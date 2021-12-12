@@ -1,6 +1,6 @@
-using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEditor;
 using UnityEngine.Events;
 
 public class MainManager : MonoBehaviour
@@ -9,7 +9,8 @@ public class MainManager : MonoBehaviour
     private static Dictionary<string, UnityEvent> eventDictionary = new Dictionary<string, UnityEvent>();
 
     public PossibleCardStats possibleCardStats;
-    public Card card;
+    public GameObject CardGameObject;
+    Card card;
 
     Player player;
     #endregion
@@ -21,8 +22,12 @@ public class MainManager : MonoBehaviour
         StartListining("Generate", Generate);
         StartListining("Save", Save);
         StartListining("Execute", Execute);
+        StartListining("Load", Load);
 
         player = FindObjectOfType(typeof(Player)) as Player;
+        card = CardGameObject.GetComponent<Card>();
+
+        TriggerEvent("Generate");
     }
 
     #endregion
@@ -33,14 +38,14 @@ public class MainManager : MonoBehaviour
         if (eventDictionary.TryGetValue(Key, out UnityEvent thisEvent))
         {
             thisEvent.AddListener(listener);
-            Debug.Log("Added listener to Key: " + Key );
+            //Debug.Log("Added listener to Key: " + Key );
         }
         else
         {
             thisEvent = new UnityEvent();
             thisEvent.AddListener(listener);
             eventDictionary.Add(Key, thisEvent);
-            Debug.Log("Created Key: " + Key + " and added listener to it");
+            //Debug.Log("Created Key: " + Key + " and added listener to it");
         }
     }
 
@@ -49,7 +54,7 @@ public class MainManager : MonoBehaviour
         if (eventDictionary.TryGetValue(Key, out UnityEvent thisEvent))
         {
             thisEvent.RemoveListener(listener);
-            Debug.Log("Removed listener from Key: " + Key);
+            //Debug.Log("Removed listener from Key: " + Key);
         }
     }
 
@@ -63,72 +68,100 @@ public class MainManager : MonoBehaviour
     #endregion
 
     #region Manage Buttons
-
     private void Generate()
     {
         card.Name = possibleCardStats.PossibleNames[Random.Range(0, possibleCardStats.PossibleNames.Count)];
         card.Description = possibleCardStats.PossibleDescriptions[Random.Range(0, possibleCardStats.PossibleDescriptions.Count)];
         card.sprite = possibleCardStats.PossibleTextures[Random.Range(0, possibleCardStats.PossibleTextures.Count)];
         card.Effect = possibleCardStats.PossibleEffects[Random.Range(0, possibleCardStats.PossibleEffects.Count)];
+
+        Debug.Log("Generated Card");
     }
 
-    public void Save()
+    private void Execute()
     {
-        Debug.Log("Save");
-    }
-
-    public void Execute()
-    {
-        foreach(Effects.Calculations effect in card.Effect.calculations)
+        foreach (Effects.Calcs effect in card.Effect.Calculations)
         {
-            string type = effect.calculationType.value;
-            if(type == "Multiply")
+            string type = effect.CalculationType.ToString();
+            string playertype = effect.PlayerPropertyType.ToString();
+            if (type == "Multiply")
             {
-                if(effect.propertyType.value == "HP")
+                if (playertype == "Hp")
                 {
-                    player.Hp *= effect.Value;
+                    player.Hp *= effect.CalculationValue;
                 }
-                else if (effect.propertyType.value == "Mana")
+                else if (playertype == "Mana")
                 {
-                    player.Mana *= effect.Value;
+                    player.Mana *= effect.CalculationValue;
                 }
-                else if (effect.propertyType.value == "Speed")
+                else if (playertype == "Speed")
                 {
-                    player.Speed *= effect.Value;
+                    player.Speed *= effect.CalculationValue;
                 }
             }
-            else if(type == "Add")
+            else if (type == "Add")
             {
-                if (effect.propertyType.value == "HP")
+                if (playertype == "Hp")
                 {
-                    player.Hp += effect.Value;
+                    player.Hp += effect.CalculationValue;
                 }
-                else if (effect.propertyType.value == "Mana")
+                else if (playertype == "Mana")
                 {
-                    player.Mana += effect.Value;
+                    player.Mana += effect.CalculationValue;
                 }
-                else if (effect.propertyType.value == "Speed")
+                else if (playertype == "Speed")
                 {
-                    player.Speed += effect.Value;
+                    player.Speed += effect.CalculationValue;
                 }
             }
-            else if(type == "substract")
+            else if (type == "Substract")
             {
-                if (effect.propertyType.value == "HP")
+                if (playertype == "Hp")
                 {
-                    player.Hp -= effect.Value;
+                    player.Hp -= effect.CalculationValue;
                 }
-                else if (effect.propertyType.value == "Mana")
+                else if (playertype == "Mana")
                 {
-                    player.Mana -= effect.Value;
+                    player.Mana -= effect.CalculationValue;
                 }
-                else if (effect.propertyType.value == "Speed")
+                else if (playertype == "Speed")
                 {
-                    player.Speed -= effect.Value;
+                    player.Speed -= effect.CalculationValue;
                 }
             }
         }
-        
+        Debug.Log("Executed effect on player");
+    }
+
+    private void Save()
+    {
+        string path = EditorUtility.SaveFilePanel("Save card", Application.dataPath + "/Prefabs", "Card", "prefab");
+        if (path == "") return;
+
+        PrefabUtility.SaveAsPrefabAsset(CardGameObject, path);
+        Debug.Log("Saved Card");
+    }
+
+    private void Load()
+    {
+        //check good path
+        string path = EditorUtility.OpenFilePanel("Open card", Application.dataPath + "/Prefabs", "prefab");
+        if (path == "") return;
+
+        //check is it card
+        GameObject cardoGameobjct = PrefabUtility.LoadPrefabContents(path);
+        if (cardoGameobjct.GetComponent<Card>() == null)
+        {
+            Debug.LogWarning("Wrong Game Object");
+            return;
+        }
+
+        //instantiate card
+        Transform parent = CardGameObject.transform.parent;
+        Destroy(CardGameObject);
+        CardGameObject = Instantiate(cardoGameobjct, parent);
+        card = CardGameObject.GetComponent<Card>();
+        Debug.Log("Loaded Card");
     }
     #endregion
 
@@ -136,10 +169,11 @@ public class MainManager : MonoBehaviour
 
     private void OnGUI()
     {
+        GUILayout.Space(25);
         if (GUILayout.Button("Generuj")) TriggerEvent("Generate");
-        if (GUILayout.Button("Zapisz")) TriggerEvent("Save");
         if (GUILayout.Button("Wykonaj")) TriggerEvent("Execute");
-
+        if (GUILayout.Button("Zapisz")) TriggerEvent("Save");
+        if (GUILayout.Button("Wczytaj")) TriggerEvent("Load");
     }
     #endregion
 }

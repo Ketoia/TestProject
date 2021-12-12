@@ -1,14 +1,20 @@
-using System.Collections;
-using System.Collections.Generic;
 using UnityEngine;
 
 public class Player : MonoBehaviour
 {
-    public int Hp, Mana, Speed;
+    public float Hp, Mana, Speed;
 
+    Rect windowRect = new Rect(80, 25, 150, 100);
 
-    private void OnGUI()
+    void OnGUI()
     {
-        
+        windowRect = GUI.Window(0, windowRect, DoMyWindow, "Player");
+    }
+
+    void DoMyWindow(int windowID)
+    {
+        GUILayout.Label($"HP: {Hp}");
+        GUILayout.Label($"Mana: {Mana}");
+        GUILayout.Label($"Speed: {Speed}");
     }
 }

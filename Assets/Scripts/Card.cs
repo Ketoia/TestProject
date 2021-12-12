@@ -1,4 +1,3 @@
-using System.Collections;
 using System.Collections.Generic;
 using UnityEditor;
 using UnityEngine;
@@ -52,16 +51,17 @@ public class Card : MonoBehaviour
             if (value == null) return;
             TextEffect.text = "";
 
-            Effects.Calculations[] calc = value.calculations;
-            for (int i = 0; i < calc.Length; i++)
+            List<Effects.Calcs> calc = value.Calculations;
+            for (int i = 0; i < calc.Count; i++)
             {
-                TextEffect.text += calc[i].calculationType.value + " " + calc[i].Value;
+                TextEffect.text += calc[i].CalculationType + " " + calc[i].CalculationValue;
 
-                if (calc[i].calculationType.value == "substract") TextEffect.text += " from ";
+                if (calc[i].CalculationType.ToString() == "Substract") TextEffect.text += " from ";
+                else if (calc[i].CalculationType.ToString() == "Multiply") TextEffect.text += " by ";
                 else TextEffect.text += " to ";
 
-                TextEffect.text += calc[i].propertyType.value;
-                if (i != calc.Length - 1) TextEffect.text += "\n";
+                TextEffect.text += calc[i].PlayerPropertyType;
+                if (i != calc.Count - 1) TextEffect.text += "\n";
             }
         }
     }
@@ -123,16 +123,17 @@ public class CardPropertyDrawer : Editor
             card._Effect = Effect;
             string text = "";
 
-            Effects.Calculations[] calc = card.Effect.calculations;
-            for (int i = 0; i < calc.Length; i++)
+            List<Effects.Calcs> calc = card.Effect.Calculations;
+            for (int i = 0; i < calc.Count; i++)
             {
-                text += calc[i].calculationType.value + " " + calc[i].Value;
+                text += calc[i].CalculationType + " " + calc[i].CalculationValue;
 
-                if (calc[i].calculationType.value == "substract") text += " from ";
+                if (calc[i].CalculationType.ToString() == "Substract") text += " from ";
+                else if (calc[i].CalculationType.ToString() == "Multiply") text += " by ";
                 else text += " to ";
 
-                text += calc[i].propertyType.value;
-                if (i != calc.Length - 1) text += "\n";
+                text += calc[i].PlayerPropertyType;
+                if (i != calc.Count - 1) text += "\n";
             }
             card.TextEffect.text = text;
 

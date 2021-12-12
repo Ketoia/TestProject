@@ -18,7 +18,7 @@ MonoBehaviour:
   - Pizza przegranych
   PossibleDescriptions:
   - "Wiele os\xF3b otrzymuje od niej si\u0142e, jednak\u017Ce niekt\xF3rych mo\u017Ce
-    niesamowicie zatr\xF3\u0107"
+    niesamowicie zatru\u0107"
   - "Osobi\u015Bcie nie jad\u0142bym jej, ale nie jestem od tego by decydowa\u0107
     kto ma co je\u015B\u0107"
   - "Z pewno\u015Bci\u0105 pizza ta powinna si\u0119 znale\u017A\u0107 na j\u0119zykach
@@ -29,3 +29,4 @@ MonoBehaviour:
   - {fileID: 21300000, guid: f05133725bc0b3b48b66668f94049b1d, type: 3}
   PossibleEffects:
   - {fileID: 11400000, guid: 97c0027051f60ef47a073fdf9a011fe3, type: 2}
+  - {fileID: 11400000, guid: eeb7ecb3331cfb94db70b30dedd95907, type: 2}
